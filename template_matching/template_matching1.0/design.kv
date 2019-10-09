@@ -1,0 +1,533 @@
+#:import ThemeManager kivymd.theming.ThemeManager
+#:import MDTextField kivymd.textfields.MDTextField
+#:import MDLabel kivymd.label.MDLabel
+#:import MDRaisedButton kivymd.button.MDRaisedButton
+#:import MDFloatingActionButton kivymd.button.MDFloatingActionButton
+#:import TabbedPanel kivy.uix.tabbedpanel
+
+<WindowManager>:
+    LoginWindow:
+        name: 'login'
+    CreateAccountWindow:
+        name: 'create'
+    MainWindow:
+        name: 'welcome'
+    LoadingPage:
+        name: 'loading'
+    PDFIsUploaded:
+        name: 'pdfuploaded'
+    OCRComplete:
+        name: 'ocrcomplete'
+    HelpPage:
+        name: 'help'
+<Dialogs@Screen>
+    MDRaisedButton:
+        text: "Open Ok Cancel Dialog"
+        size_hint: None, None
+        size: 3 * dp(48), dp(48)
+        pos_hint: {'center_x': .5, 'center_y': .2}
+        opposite_colors: True
+        on_release:
+            root.manager.current = 'login'
+            app.Exitpopup_Example()
+
+<LoginWindow>:
+    email: email
+    password: password
+
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "waverunner_background.png"
+                size: self.size
+                pos: self.pos
+        Button:
+            #wssc logo
+            background_color: 0,0,0,0
+            pos_hint: {'x': -0.08, 'y': 0.8}
+            size_hint_y: 0.2
+            size_hint_x: 0.25
+            on_release:
+                root.manager.current = 'login'
+            Image:
+                source: 'semicircle.png'
+                pos: self.parent.pos
+                keep_ratio: False
+                allow_stretch: False
+                size: self.parent.size
+        MDFloatingActionButton:
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            icon: 'help'
+            pos_hint:{'x': 0.795, 'y': 0.91}
+            md_bg_color: app.theme_cls.primary_color
+            on_release:
+                app.helpBtn()
+        MDRaisedButton:
+            text: 'Exit Application'
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            pos_hint:{'x': 0.84, 'y': 0.92}
+            on_release:
+                app.exit_app()
+
+        FloatLayout:
+            size: root.width, root.height/2
+
+            MDLabel:
+                halign: 'center'
+                valign: 'middle'
+                size_hint_y: 1.5
+                font_style: 'H6'
+                font_size: sp(64)
+                text: 'Parkway Plant Data Recordation & Reporting Processes'
+                #how does color work?
+                color: 1,1,1,1
+            MDLabel:
+                text:"Email: "
+                font_size: sp(30)
+                pos_hint: {"x":0.2, "top": 0.65}
+                size_hint: 0.1, 0.15
+                color: 1,1,1,1
+            TextInput:
+                id: email
+                font_size: (root.width**2 + root.height**2) / 16**4
+                pos_hint: {'x': 0.4, 'top': 0.65}
+                size_hint: 0.5, 0.12
+                write_tab: False
+                multiline: False
+                on_text_validate: password.focus = True
+            MDLabel:
+                text:"Password: "
+                #how to add icon??
+                #icon: 'lock'
+                font_size: sp(30)
+                pos_hint: {"x":0.2, "top": 0.5}
+                size_hint: 0.1, 0.15
+                color: 1,1,1,1
+            TextInput:
+                id: password
+                font_size: (root.width**2 + root.height**2) / 16**4
+                pos_hint: {'x': 0.4, 'top': 0.5}
+                size_hint: 0.5, 0.12
+                multiline: False
+                password: True
+                on_text_validate:
+                    root.manager.transition.direction = "up"
+                    root.loginBtn()
+            MDRaisedButton:
+                pos_hint:{"x":0.35,"y":0.15}
+                size_hint: 0.3, 0.1
+                font_size: sp(40)
+                elevation_normal: 12
+                text: "Login"
+                text_color: 1,1,1,1
+                on_release:
+                    root.manager.transition.direction = "up"
+                    root.loginBtn()
+            MDRaisedButton:
+                pos_hint:{"x":0.4,"y":0.05}
+                size_hint: 0.2, 0.05
+                font_size: sp(16)
+                elevation_normal: 12
+                text: "Don't have an Account? Create One"
+                text_color: 1,1,1,1
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.createBtn()
+
+<CreateAccountWindow>:
+    namee: namee
+    email: email
+    password: passw
+
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "waverunner_background.png"
+                size: self.size
+                pos: self.pos
+        Button:
+            #wssc logo
+            background_color: 0,0,0,0
+            pos_hint: {'x': -0.08, 'y': 0.8}
+            size_hint_y: 0.2
+            size_hint_x: 0.25
+            on_release:
+                root.manager.current = 'login'
+            Image:
+                source: 'semicircle.png'
+                pos: self.parent.pos
+                keep_ratio: False
+                allow_stretch: False
+                size: self.parent.size
+        MDFloatingActionButton:
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            icon: 'help'
+            pos_hint:{'x': 0.795, 'y': 0.91}
+            md_bg_color: app.theme_cls.primary_color
+            on_release:
+                app.helpBtn()
+        MDRaisedButton:
+            text: 'Exit Application'
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            pos_hint:{'x': 0.84, 'y': 0.92}
+            on_release:
+                app.exit_app()
+
+        FloatLayout:
+            size: root.width, root.height/2
+
+            MDLabel:
+                text: "Create an Account"
+                text_color: 1,1,1,1
+                halign: 'center'
+                valign: 'middle'
+                size_hint_y: 1.75
+                font_style: 'H6'
+                font_size: sp(60)
+                color: 1,1,1,1
+            MDLabel:
+                size_hint: 0.5,0.12
+                pos_hint: {"x":0.2, "top":0.75}
+                font_size: sp(30)
+                text: "Name: "
+                color: 1,1,1,1
+            TextInput:
+                id: namee
+                pos_hint: {"x":0.4, "top":0.75}
+                size_hint: 0.5, 0.12
+                font_size: (root.width**2 + root.height**2) / 16**4
+                multiline: False
+            MDLabel:
+                size_hint: 0.5,0.12
+                pos_hint: {"x":0.2, "top":0.75-0.13}
+                font_size: sp(30)
+                text: "Email: "
+                color: 1,1,1,1
+            TextInput:
+                id: email
+                pos_hint: {"x":0.4, "top":0.75-0.13}
+                size_hint: 0.5, 0.12
+                font_size: (root.width**2 + root.height**2) / 16**4
+                multiline: False
+            MDLabel:
+                size_hint: 0.5,0.12
+                pos_hint: {"x":0.2, "top":0.75-0.13*2}
+                font_size: sp(30)
+                text: "Password: "
+                color: 1,1,1,1
+            TextInput:
+                id: passw
+                pos_hint: {"x":0.4, "top":0.75-0.13*2}
+                size_hint: 0.5, 0.12
+                font_size: (root.width**2 + root.height**2) / 16**4
+                multiline: False
+                password: True
+            MDRaisedButton:
+                pos_hint:{"x":0.25,"y":0.2}
+                size_hint: 0.5, 0.1
+                font_size: sp(16)
+                elevation_normal: 12
+                text: "Already have an Account? Log In"
+                text_color: 1,1,1,1
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.login()
+            MDRaisedButton:
+                pos_hint:{"x":0.35,"y":0.05}
+                size_hint: 0.3, 0.1
+                font_size: sp(18)
+                elevation_normal: 12
+                text: "Submit"
+                text_color: 1,1,1,1
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.submit()
+
+<MainWindow>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "waverunner_background.png"
+                size: self.size
+                pos: self.pos
+        Button:
+            #wssc logo
+            background_color: 0,0,0,0
+            pos_hint: {'x': -0.08, 'y': 0.8}
+            size_hint_y: 0.2
+            size_hint_x: 0.25
+            on_release:
+                root.manager.current = 'login'
+            Image:
+                source: 'semicircle.png'
+                pos: self.parent.pos
+                keep_ratio: False
+                allow_stretch: False
+                size: self.parent.size
+        MDFloatingActionButton:
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            icon: 'help'
+            pos_hint:{'x': 0.795, 'y': 0.91}
+            md_bg_color: app.theme_cls.primary_color
+            on_release:
+                app.helpBtn()
+        MDRaisedButton:
+            text: 'Exit Application'
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            pos_hint:{'x': 0.84, 'y': 0.92}
+            on_release:
+                app.exit_app()
+
+        FloatLayout:
+            size: root.width, root.height/2
+
+            MDLabel:
+                halign: 'center'
+                valign: 'middle'
+                size_hint_y: 1.65
+                font_style: 'H6'
+                font_size: sp(64)
+                text: 'Hello! Glad to make your aqua-intance! '
+                #how does color work?
+                color: 1,1,1,1
+            MDLabel:
+                halign: 'center'
+                valign: 'middle'
+                size_hint_y: 1.35
+                font_style: 'H6'
+                font_size: sp(45)
+                text: 'Parkway Plant Data Recordation & Reporting Processes'
+                #how does color work?
+                color: 1,1,1,1
+            MDRaisedButton:
+                text_color: 1,1,1,1
+                font_size: sp(30)
+                elevation_normal: 12
+                pos_hint:{"center_x":0.5,"y":0.1}
+                text: "Upload JPG File"
+                on_release:
+                    app.open_file()
+                    root.changeScreen()
+                    root.manager.transition.direction = "down"
+
+<LoadingPage>:
+
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            Image:
+                id: loadingicon
+                source: ""
+
+<PDFIsUploaded>:
+
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "waverunner_background.png"
+                size: self.size
+                pos: self.pos
+        Button:
+            #wssc logo
+            background_color: 0,0,0,0
+            pos_hint: {'x': -0.08, 'y': 0.8}
+            size_hint_y: 0.2
+            size_hint_x: 0.25
+            on_release:
+                root.manager.current = 'login'
+            Image:
+                source: 'semicircle.png'
+                pos: self.parent.pos
+                keep_ratio: False
+                allow_stretch: False
+                size: self.parent.size
+        MDFloatingActionButton:
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            icon: 'help'
+            pos_hint:{'x': 0.795, 'y': 0.91}
+            md_bg_color: app.theme_cls.primary_color
+            on_release:
+                app.helpBtn()
+        MDRaisedButton:
+            text: 'Exit Application'
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            pos_hint:{'x': 0.84, 'y': 0.92}
+            on_release:
+                app.exit_app()
+
+        AnchorLayout:
+            size: root.width, root.height/2
+            Image:
+                id: image
+                source: ''
+                size_hint: 0.65, 0.65
+
+        MDRaisedButton:
+            text: 'Upload different JPG file'
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            pos_hint:{"center_x":0.35,"y":0.1}
+            on_release:
+                app.open_file()
+                root.assign_image
+        MDRaisedButton:
+            text: 'Convert Data with OCR'
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            pos_hint:{"center_x":0.65,"y":0.1}
+            on_release:
+                root.manager.current = 'loading'
+
+<OCRComplete>:
+
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "waverunner_background.png"
+                size: self.size
+                pos: self.pos
+        Button:
+            #wssc logo
+            background_color: 0,0,0,0
+            pos_hint: {'x': -0.08, 'y': 0.8}
+            size_hint_y: 0.2
+            size_hint_x: 0.25
+            on_release:
+                root.manager.current = 'login'
+            Image:
+                source: 'semicircle.png'
+                pos: self.parent.pos
+                keep_ratio: False
+                allow_stretch: False
+                size: self.parent.size
+        MDFloatingActionButton:
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            icon: 'help'
+            pos_hint:{'x': 0.795, 'y': 0.91}
+            md_bg_color: app.theme_cls.primary_color
+            on_release:
+                app.helpBtn()
+        MDRaisedButton:
+            text: 'Exit Application'
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            pos_hint:{'x': 0.84, 'y': 0.92}
+            on_release:
+                app.exit_app()
+
+        TabbedPanel:
+            size_hint: .75, .75
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            do_default_tab: False
+            tab_width: self.parent.width / 5
+            tab_pos: 'top_right'
+            background_color: 0,0,0,0
+            TabbedPanelItem:
+                text: 'OCR File'
+                pos_hint: {'x': 0.35, 'y': 0.25}
+                background_color: .25,1,.25,.5
+                MDLabel:
+                    id: input
+                    multiline: True
+                #Button:
+                 #   text: "Save"
+                    #on_release:
+                     #   root.read_file(input.text)
+            TabbedPanelItem:
+                text: 'Scanned Image'
+                background_color: .25,1,.25,.5
+                Image:
+                    id: iimage
+                    source: ''
+                    keep_ratio: False
+
+
+    FloatLayout:
+        size: root.width, root.height/2
+        MDRaisedButton:
+            text: 'Edit'
+            text_color: 1,1,1,1
+            font_size: sp(45)
+            elevation_normal: 12
+            pos_hint:{"center_x":0.35,"y":0.05}
+            on_release:
+                root.edit_file()
+        MDRaisedButton:
+            text: 'Submit'
+            text_color: 1,1,1,1
+            font_size: sp(45)
+            elevation_normal: 12
+            pos_hint:{"center_x":0.65,"y":0.05}
+            on_release:
+                app.save_file()
+                root.manager.current = 'login'
+                root.manager.transition.direction = 'up'
+
+<HelpPage>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                source: "waverunner_background.png"
+                size: self.size
+                pos: self.pos
+        Button:
+            #wssc logo
+            background_color: 0,0,0,0
+            pos_hint: {'x': -0.08, 'y': 0.8}
+            size_hint_y: 0.2
+            size_hint_x: 0.25
+            on_release:
+                root.manager.current = 'login'
+            Image:
+                source: 'semicircle.png'
+                pos: self.parent.pos
+                keep_ratio: False
+                allow_stretch: False
+                size: self.parent.size
+        MDFloatingActionButton:
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            icon: 'help'
+            pos_hint:{'x': 0.795, 'y': 0.91}
+            md_bg_color: app.theme_cls.primary_color
+            on_release:
+                app.helpBtn()
+        MDRaisedButton:
+            text: 'Exit Application'
+            text_color: 1,1,1,1
+            font_size: sp(30)
+            elevation_normal: 12
+            pos_hint:{'x': 0.84, 'y': 0.92}
+            on_release:
+                app.exit_app()
