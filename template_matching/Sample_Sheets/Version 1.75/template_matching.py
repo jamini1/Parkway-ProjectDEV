@@ -3,6 +3,8 @@ import numpy as np
 import imutils
 from PIL import Image
 from matplotlib import pyplot as plt
+import timeit
+
 
 
 # code taken from https://www.pyimagesearch.com/2015/01/26/multi-scale-template-matching-using-python-opencv/
@@ -163,185 +165,103 @@ def getCoords(y0, y1, size_chg):
 
 # returns the name and number of columns of a particular template
 def getFileName(template_name):
-    if template_name == "pssdate.jpg":
+    if template_name == "BioSolDate.jpg":
         col_num = 7
-        save_file_name = 'ssdate'
-    if template_name == 'psssvirb1.jpg':
+        save_file_name = 'InitDate'
+    if template_name == 'BioSolInitTime.jpg':
         col_num = 7
-        save_file_name = 'svirb1'
-    if template_name == 'psssvirb2.jpg':
+        save_file_name = 'InitTime'
+    if template_name == 'BioSolInitpH.jpg':
         col_num = 7
-        save_file_name = 'svirb2'
-    if template_name == 'pssmcrtrb1.jpg':
+        save_file_name = 'InitpH'
+    if template_name == 'BioSolInitTempC.jpg':
         col_num = 7
-        save_file_name = 'mcrtrb1'
-    if template_name == 'pssmcrtrb2.jpg':
+        save_file_name = 'InitTempC'
+    if template_name == 'BioSolInitAdjpH.jpg':
         col_num = 7
-        save_file_name = 'mcrtrb2'
-    if template_name == 'pssrb1p4pH.jpg':
+        save_file_name = 'InitAdjpH'
+    if template_name == 'BioSolInitInitials.jpg':
         col_num = 7
-        save_file_name = 'rb1p4pH'
+        save_file_name = 'InitInitials'
 
-    if template_name == 'pssrb1p4mlss.jpg':
+    if template_name == 'BioSol2HrTime.jpg':
         col_num = 7
-        save_file_name = 'rb1p4mlss'
-    if template_name == 'pssrb1p4min.jpg':
+        save_file_name = '2HrTime'
+    if template_name == 'BioSol2HrpH.jpg':
         col_num = 7
-        save_file_name = 'rb1p4min'
-    if template_name == 'pssrb2p4pH.jpg':
+        save_file_name = '2HrpH'
+    if template_name == 'BioSol2HrTempC.jpg':
         col_num = 7
-        save_file_name = 'rb2p4pH'
-    if template_name == 'pssrb2p4mlss.jpg':
+        save_file_name = '2HrTempC'
+    if template_name == 'BioSol2HrAdjpH.jpg':
         col_num = 7
-        save_file_name = 'rb2p4mlss'
-    if template_name == 'pssrb2p4min.jpg':
+        save_file_name = '2HrAdjpH'
+    if template_name == 'BioSol2HrInitials.jpg':
         col_num = 7
-        save_file_name = 'rb2p4min'
+        save_file_name = '2HrInitials'
 
-    if template_name == 'pssrasmlss.jpg':
+    if template_name == 'BioSol24HrTime.jpg':
         col_num = 7
-        save_file_name = 'rasmlss'
-    if template_name == 'pssrb1p2DO.jpg':
+        save_file_name = '24HrTime'
+    if template_name == 'BioSol24HrpH.jpg':
         col_num = 7
-        save_file_name = 'rb1p2DO'
-    if template_name == 'pssrb1p3.jpg':
+        save_file_name = '24HrpH'
+    if template_name == 'BioSol24HrTempC.jpg':
         col_num = 7
-        save_file_name = 'rb1p3'
-    if template_name == 'pssrb2p2DO.jpg':
+        save_file_name = '24HrTempC'
+    if template_name == 'BioSol24HrAdjpH.jpg':
         col_num = 7
-        save_file_name = 'rb2p2DO'
-    if template_name == 'pssrb2p3.jpg':
+        save_file_name = '24HrAdjpH'
+    if template_name == 'BioSol24HrInitials.jpg':
         col_num = 7
-        save_file_name = 'rb2p3'
+        save_file_name = '24HrInitials'
 
-    if template_name == 'psslimesilo.jpg':
+    if template_name == 'BioSolInitTrailer.jpg':
         col_num = 7
-        save_file_name = 'limesilo'
+        save_file_name = 'Trailer'
 
-    if template_name == 'pssBDBpolygas.jpg':
+    if template_name == 'BioSolLimeBuffer7-1.jpg':
         col_num = 1
-        save_file_name = 'BDBpolygas'
-    if template_name == 'pssairscrubber.jpg':
+        save_file_name = 'LimeBuffer71'
+    if template_name == 'BioSolLimeBuffer7-2.jpg':
         col_num = 0
-        save_file_name = 'pssairscrubber'
-    if template_name == 'psscarbontank1.jpg':
+        save_file_name = 'LimeBuffer72'
+    if template_name == 'BioSolLimeBuffer10-1.jpg':
         col_num = 1
-        save_file_name = 'cartank1'
-    if template_name == 'psscarbontank2.jpg':
+        save_file_name = 'LimeBuffer101'
+    if template_name == 'BioSolLimeBuffer10-2.jpg':
         col_num = 0
-        save_file_name = 'cartank2'
-    if template_name == 'psshypotank1.jpg':
+        save_file_name = 'LimeBuffer102'
+    if template_name == 'BioSolLimeBuffer1245-1.jpg':
         col_num = 1
-        save_file_name = 'hypotank1'
-    if template_name == 'psshypotank2.jpg':
+        save_file_name = 'LimeBuffer12451'
+    if template_name == 'BioSolLimeBuffer1245-2.jpg':
         col_num = 0
-        save_file_name = 'hypotank2'
-    if template_name == 'pssbisulfatetotals.jpg':
+        save_file_name = 'LimeBuffer12452'
+    if template_name == 'BioSolLimeBufferTempC-1.jpg':
         col_num = 1
-        save_file_name = 'bisulfatetotals'
-    if template_name == 'psscaustictank1.jpg':
+        save_file_name = 'LimeTempC1'
+    if template_name == 'BioSolLimeBufferTempC-2.jpg':
         col_num = 0
-        save_file_name = 'caustank1'
-    if template_name == 'psscaustictank2.jpg':
+        save_file_name = 'LimeTempC2'
+    if template_name == 'BioSolLimeDate1.jpg':
         col_num = 1
-        save_file_name = 'caustank2'
-    if template_name == 'pssalumtank1.jpg':
+        save_file_name = 'LimeDate1'
+    if template_name == 'BioSolLimeDate2.jpg':
         col_num = 0
-        save_file_name = 'alumtank1'
-    if template_name == 'pssalumtank2.jpg':
+        save_file_name = 'LimeDate2'
+    if template_name == 'BioSolLimeInitials1.jpg':
         col_num = 1
-        save_file_name = 'alumtank2'
-    if template_name == 'pssinfluentpH.jpg':
+        save_file_name = 'LimeInitials1'
+    if template_name == 'BioSolLimeInitials2.jpg':
         col_num = 0
-        save_file_name = 'influentpH'
-    if template_name == 'pssinfluenttemp.jpg':
+        save_file_name = 'LimeInitials2'
+    if template_name == 'BioSolLimeTime1.jpg':
         col_num = 1
-        save_file_name = 'influenttemp'
-    if template_name == 'pssphosphorousPO4.jpg':
+        save_file_name = 'LimeTime1'
+    if template_name == 'BioSolLimeTime2.jpg':
         col_num = 0
-        save_file_name = 'phosphorousPO4'
-    if template_name == 'psscarbontank1.jpg':
-            col_num = 1
-            save_file_name = 'cartank1'
-    if template_name == 'psscarbontank2.jpg':
-            col_num = 0
-            save_file_name = 'cartank2'
-    if template_name == 'psshypotank1.jpg':
-            col_num = 1
-            save_file_name = 'hypotank1'
-    if template_name == 'psshypotank2.jpg':
-            col_num = 0
-            save_file_name = 'hypotank2'
-    if template_name == 'pssbisulfatetotals.jpg':
-            col_num = 1
-            save_file_name = 'bisulfatetotals'
-    if template_name == 'psscaustictank1.jpg':
-            col_num = 0
-            save_file_name = 'caustank1'
-    if template_name == 'psscaustictank2.jpg':
-            col_num = 1
-            save_file_name = 'caustank2'
-    if template_name == 'pssalumtank1.jpg':
-            col_num = 0
-            save_file_name = 'alumtank1'
-    if template_name == 'pssalumtank2.jpg':
-            col_num = 1
-            save_file_name = 'alumtank2'
-    if template_name == 'pssinfluentpH.jpg':
-            col_num = 0
-            save_file_name = 'influentpH'
-    if template_name == 'pssinfluenttemp.jpg':
-            col_num = 1
-            save_file_name = 'influenttemp'
-    if template_name == 'pssphosphorousPO4.jpg':
-            col_num = 0
-            save_file_name = 'phosphorousPO4'
-
-    if template_name == 'pssammonianitro.jpg':
-            col_num = 1
-            save_file_name = 'ammnitro'
-    if template_name == 'pssCCDO.jpg':
-            col_num = 0
-            save_file_name = 'CCDO'
-    if template_name == 'pssCCpH.jpg':
-            col_num = 1
-            save_file_name = 'CCpH'
-    if template_name == 'psstotalCL2.jpg':
-            col_num = 0
-            save_file_name = 'totalCL2'
-    if template_name == 'pssCL2dose.jpg':
-            col_num = 1
-            save_file_name = 'CL2dose'
-    if template_name == 'pssbisulfitedose.jpg':
-            col_num = 0
-            save_file_name = 'bisulfitedose'
-    if template_name == 'pssflow.jpg':
-            col_num = 1
-            save_file_name = 'flow'
-    if template_name == 'pssinit.jpg':
-            col_num = 0
-            save_file_name = 'initials'
-    if template_name == 'pssAVinfluentpH.jpg':
-            col_num = 1
-            save_file_name = 'avinflupH'
-    if template_name == 'pssAVinfluenttemp.jpg':
-            col_num = 0
-            save_file_name = 'avinflutemp'
-    if template_name == 'pssAVCCammnitro.jpg':
-            col_num = 1
-            save_file_name = 'avCCammnitro'
-    if template_name == 'pssAVCCDO.jpg':
-            col_num = 0
-            save_file_name = 'avCCDO'
-    if template_name == 'pssAVCCpH.jpg':
-            col_num = 0
-            save_file_name = 'avCCpH'
-    if template_name == 'pssAVCCtotalCL2.jpg':
-            col_num = 1
-            save_file_name = 'avCCtotCL2'
-    if template_name == 'pssemplinit.jpg':
-            col_num = 0
-            save_file_name = 'emplinit'
+        save_file_name = 'LimeTime2'
 
     return save_file_name, col_num
 
@@ -350,108 +270,78 @@ def getFileName(template_name):
 # In the end, each form will have their own.py file
 
 # this is hardcoded in for now, but in the real program, 'form' is a global variable
-form = '4000.jpg'
+form = '3263.jpg'
 
-"""x0, y0, x1, y1 = template_match(form, 'pssdate.jpg', 'ssHeaderCol1.jpg') 
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssdate.jpg")
-x0, y0, x1, y1 = template_match(form, 'psssvirb1.jpg', 'ssHeaderCol1.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "psssvirb1.jpg")
-x0, y0, x1, y1 = template_match(form, 'psssvirb2.jpg', 'ssHeaderCol1.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "psssvirb2.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssmcrtrb1.jpg', 'ssHeaderCol1.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssmcrtrb1.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssmcrtrb2.jpg', 'ssHeaderCol1.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssmcrtrb2.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssrb1p4pH.jpg', 'ssHeaderCol1-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, 'pssrb1p4pH.jpg')
+x0, y0, x1, y1 = template_match(form, 'BioSolDate.jpg', 'headercol1-0.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolDate.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolInitTime.jpg', 'headercol1.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolInitTime.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolInitpH.jpg', 'headercol1.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolInitpH.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolInitTempC.jpg', 'headercol1.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolInitTempC.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolInitAdjpH.jpg', 'headercol1.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolInitAdjpH.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolInitInitials.jpg', 'headercol1.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, 'BioSolInitInitials.jpg')
 
-x0, y0, x1, y1 = template_match(form, 'pssrb1p4mlss.jpg', 'ssHeaderCol1-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssrb1p4mlss.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssrb1p4min.jpg', 'ssHeaderCol1-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssrb1p4min.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssrb2p4mlss.jpg', 'ssHeaderCol1-3.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssrb2p4mlss.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssrb2p4pH.jpg', 'ssHeaderCol1-3.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssrb2p4pH.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssrb2p4min.jpg', 'ssHeaderCol1-3.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssrb2p4min.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSol2HrTime.jpg', 'headerCol1-2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSol2HrTime.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSol2HrTempC.jpg', 'headerCol1-2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSol2HrTempC.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSol2HrAdjpH.jpg', 'headerCol1-2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSol2HrAdjpH.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSol2HrInitials.jpg', 'headerCol1-2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSol2HrInitials.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSol2HrpH.jpg', 'headerCol1-2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSol2HrpH.jpg")
 
-x0, y0, x1, y1 = template_match(form, 'pssrasmlss.jpg', 'ssHeaderCol1-3.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssrasmlss.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssrb1p2DO.jpg', 'ssHeaderCol1-4.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssrb1p2DO.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssrb1p3.jpg', 'ssHeaderCol1-4.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssrb1p3.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssrb2p2DO.jpg', 'ssHeaderCol1-4.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssrb2p2DO.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssrb2p3.jpg', 'ssHeaderCol1-4.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssrb2p3.jpg")"""
+x0, y0, x1, y1 = template_match(form, 'BioSol24HrTime.jpg', 'headerCol1-3.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSol24HrTime.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSol24HrpH.jpg', 'headerCol1-3.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSol24HrpH.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSol24HrTempC.jpg', 'headerCol1-3.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSol24HrTempC.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSol24HrAdjpH.jpg', 'headerCol1-3.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSol24HrAdjpH.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSol24HrInitials.jpg', 'headerCol1-3.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSol24HrInitials.jpg")
 
-x0, y0, x1, y1 = template_match(form, 'psslimesilo.jpg', 'ssHeaderCol2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "psslimesilo.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssBDBpolygas.jpg', 'ssHeaderCol2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssBDBpolygas.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssairscrubber.jpg', 'ssHeaderCol2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssairscrubber.jpg")
-x0, y0, x1, y1 = template_match(form, 'psscarbontank1.jpg', 'ssHeaderCol2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "psscarbontank1.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolInitTrailer.jpg', 'headerCol1-T.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolInitTrailer.jpg")
 
-x0, y0, x1, y1 = template_match(form, 'psscarbontank2.jpg', 'ssHeaderCol2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "psscarbontank2.jpg")
-x0, y0, x1, y1 = template_match(form, 'psshypotank1.jpg', 'ssHeaderCol2-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "psshypotank1.jpg")
-x0, y0, x1, y1 = template_match(form, 'psshypotank2.jpg', 'ssHeaderCol2-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "psshypotank2.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeBuffer7-1.jpg', 'headerCol2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeBuffer7-1.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeBuffer10-1.jpg', 'headerCol2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeBuffer10-1.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeBuffer1245-1.jpg', 'headerCol2-2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeBuffer1245-1.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeBufferTempC-1.jpg', 'headerCol2-2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeBufferTempC-1.jpg")
 
-x0, y0, x1, y1 = template_match(form, 'pssbisulfatetotals.jpg', 'ssHeaderCol2-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssbisulfatetotals.jpg")
-x0, y0, x1, y1 = template_match(form, 'psscaustictank1.jpg', 'ssHeaderCol2-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "psscaustictank1.jpg")
-x0, y0, x1, y1 = template_match(form, 'psscaustictank2.jpg', 'ssHeaderCol2-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "psscaustictank2.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssalumtank1.jpg', 'ssHeaderCol2-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssalumtank1.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeDate1.jpg', 'headerCol2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeDate1.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeTime1.jpg', 'headerCol2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeTime1.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeInitials1.jpg', 'headerCol2-2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeInitials1.jpg")
 
-x0, y0, x1, y1 = template_match(form, 'pssalumtank2.jpg', 'ssHeaderCol2-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssalumtank2.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssinfluentpH.jpg', 'ssHeaderCol3.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssinfluentpH.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssinfluenttemp.jpg', 'ssHeaderCol3.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssinfluenttemp.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeBuffer7-2.jpg', 'headerCol3.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeBuffer7-2.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeBuffer10-2.jpg', 'headerCol3.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeBuffer10-2.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeBuffer1245-2.jpg', 'headerCol3-2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeBuffer1245-2.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeBufferTempC-2.jpg', 'headerCol3-2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeBufferTempC-2.jpg")
 
-x0, y0, x1, y1 = template_match(form, 'pssphosphorousPO4.jpg', 'ssHeaderCol3.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssphosphorousPO4.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssammonianitro.jpg', 'ssHeaderCol3.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssammonianitro.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssCCDO.jpg', 'ssHeaderCol3.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssCCDO.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssCCpH.jpg', 'ssHeaderCol3.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssCCpH.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeDate2.jpg', 'headerCol3-3.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeDate2.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeTime2.jpg', 'headerCol3-3.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeTime2.jpg")
+x0, y0, x1, y1 = template_match(form, 'BioSolLimeInitials2.jpg', 'headerCol3-2.jpg')
+crop_function("chopped.jpg", x0, y0, x1, y1, "BioSolLimeInitials2.jpg")
 
-x0, y0, x1, y1 = template_match(form, 'psstotalCL2.jpg', 'ssHeaderCol3-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "psstotalCL2.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssCL2dose.jpg', 'ssHeaderCol3-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssCL2dose.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssbisulfitedose.jpg', 'ssHeaderCol3-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssbisulfitedose.jpg")
 
-x0, y0, x1, y1 = template_match(form, 'pssflow.jpg', 'ssHeaderCol3-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssflow.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssinit.jpg', 'ssHeaderCol3-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssinit.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssAVinfluentpH.jpg', 'ssHeaderCol4.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssAVinfluentpH.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssAVinfluenttemp.jpg', 'ssHeaderCol4.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssAVinfluenttemp.jpg")
 
-x0, y0, x1, y1 = template_match(form, 'pssAVCCammnitro.jpg', 'ssHeaderCol4.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssAVCCammnitro.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssAVCCDO.jpg', 'ssHeaderCol4.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssAVCCDO.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssAVCCpH.jpg', 'ssHeaderCol4-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssAVCCpH.jpg")
 
-x0, y0, x1, y1 = template_match(form, 'pssAVCCtotalCL2.jpg', 'ssHeaderCol4-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssAVCCtotalCL2.jpg")
-x0, y0, x1, y1 = template_match(form, 'pssemplinit.jpg', 'ssHeaderCol4-2.jpg')
-crop_function("chopped.jpg", x0, y0, x1, y1, "pssemplinit.jpg")
